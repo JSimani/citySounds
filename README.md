@@ -5,3 +5,9 @@ There should be an easy and interactive way to find songs, artists, and albums r
 
 ## Solution
 A website that displays a map with markers for each major city in the United States, each containing a list of popular songs, artists, and albums relating to that city. 
+
+## Features
+* Interactive map
+* Clickable city markers
+* Info window for each city containing related songs, artists, and albums
+* Spotify link for each match
