@@ -21,3 +21,5 @@ A website that displays a map with markers for each major city in the United Sta
 ## Algorithms and Special Techniques
 * Selection algorithm to select songs, artists, and albums relating to each major city
 * Selection algorithm to match your current location with the nearest major city
+
+## Electronic Mockup
