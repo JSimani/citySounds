@@ -8,6 +8,14 @@ A website that displays a map with markers for each major city in the United Sta
 
 ## Features
 * Interactive map
+* Geolocation linking you to closest major city
 * Clickable city markers
 * Info window for each city containing related songs, artists, and albums
 * Spotify link for each match
+
+## Data Used and Collected
+* Google Maps data for the United States
+* Spotify search data for each major city
+* User's geolocation
+
+
