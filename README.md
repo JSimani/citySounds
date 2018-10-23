@@ -18,4 +18,6 @@ A website that displays a map with markers for each major city in the United Sta
 * Spotify search data for each major city
 * User's geolocation
 
-
+## Algorithms and Special Techniques
+* Selection algorithm to select songs, artists, and albums relating to each major city
+* Selection algorithm to match your current location with the nearest major city
