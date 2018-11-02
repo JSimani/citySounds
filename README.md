@@ -22,7 +22,7 @@ A website that displays a map with markers for each major city in the United Sta
 ## Algorithms and Special Techniques
 * Selection algorithm to select songs, artists, and albums relating to each major city
 * Selection algorithm to match the selected song with its corresponding lyrics
-* Selection algorithm to match your current location with the nearest major city
+* Selection algorithm to match your current location with the nearest major city !
 
 ## Electronic Mockup
 ![picture alt](https://github.com/tuftsdev/comp20-f2018-team4/blob/master/mockup.jpg "CitySounds Electronic Mockup")
