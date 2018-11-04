@@ -1,5 +1,7 @@
 var map = null;
 var markers = [];
+var infoWindow = null;
+var curloc = null;
 
 var cities = [
     ['New York', 40.7128, -74.0060],
@@ -35,6 +37,8 @@ function initMap()
 	};   
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    getCurrentLocation();
     createMarkers();
 }
 
@@ -51,4 +55,41 @@ function createMarkers() {
 
         markers.push(marker);
     }
+}
+
+function getCurrentLocation() {
+    var options = {
+        enableHighAccuracy: true
+    };
+
+    var success = function(pos) {
+        addCurrentLocation(pos)
+    };
+
+    var error = function(err) {
+        console.warn('ERROR(${err.code}): ${err.message}');
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+}
+
+function addCurrentLocation(pos) {
+    var coordinates = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+    };
+
+    var currentLocation = new google.maps.Marker({
+            position: coordinates,
+            map: map,
+            icon: {
+                url: "curloc.png",
+                scaledSize: new google.maps.Size(30, 30), 
+                origin: new google.maps.Point(0,0), 
+                anchor: new google.maps.Point(15, 15) 
+            },
+            title: "Current Location"
+    });
+
+    curloc = currentLocation;
 }
