@@ -1,4 +1,5 @@
 var map = null;
+var markers = [];
 
 var cities = [
     ['New York', 40.7128, -74.0060],
@@ -34,4 +35,20 @@ function initMap()
 	};   
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    createMarkers();
+}
+
+
+function createMarkers() {
+    for (var i = 0; i < cities.length; i++) {
+        city = cities[i];
+
+        var marker = new google.maps.Marker({
+            position: {lat: city[1], lng: city[2]},
+            map: map,
+            title: city[0]
+        });
+
+        markers.push(marker);
+    }
 }
