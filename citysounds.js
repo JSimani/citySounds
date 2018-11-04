@@ -37,6 +37,7 @@ function initMap()
 	};   
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    infoWindow = new google.maps.InfoWindow()
 
     getCurrentLocation();
     createMarkers();
@@ -53,6 +54,8 @@ function createMarkers() {
             title: city[0]
         });
 
+        initializeWindow(marker);
+
         markers.push(marker);
     }
 }
@@ -62,9 +65,26 @@ function getCurrentLocation() {
         enableHighAccuracy: true
     };
 
-    var success = function(pos) {
-        addCurrentLocation(pos)
-    };
+    var success = function (pos) {
+        var coordinates = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude
+        };
+
+        var currentLocation = new google.maps.Marker({
+                position: coordinates,
+                map: map,
+                icon: {
+                    url: "curloc.png",
+                    scaledSize: new google.maps.Size(30, 30), 
+                    origin: new google.maps.Point(0,0), 
+                    anchor: new google.maps.Point(15, 15) 
+                },
+                title: "Current Location"
+        });
+
+        curloc = currentLocation;
+    }
 
     var error = function(err) {
         console.warn('ERROR(${err.code}): ${err.message}');
@@ -73,23 +93,14 @@ function getCurrentLocation() {
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-function addCurrentLocation(pos) {
-    var coordinates = {
-        lat: pos.coords.latitude,
-        lng: pos.coords.longitude
-    };
+function initializeWindow(city) {
+    var innerHTML = "<div id='InfoWindow'>" + city.title + "</div>";
 
-    var currentLocation = new google.maps.Marker({
-            position: coordinates,
-            map: map,
-            icon: {
-                url: "curloc.png",
-                scaledSize: new google.maps.Size(30, 30), 
-                origin: new google.maps.Point(0,0), 
-                anchor: new google.maps.Point(15, 15) 
-            },
-            title: "Current Location"
+    city.addListener('click', function() {
+        infoWindow.setContent(innerHTML);
+        infoWindow.open(map, city);
     });
-
-    curloc = currentLocation;
 }
+
+
+
