@@ -25,7 +25,8 @@ var cities = [
     ['Baltimore', 39.2904, -76.6122],
     ['Atlanta', 33.7490, -84.3880],
     ['Miami', 25.7617, -80.1918],
-    ['New Orleans', 29.9511, -90.0715]
+    ['New Orleans', 29.9511, -90.0715],
+    ['Portland', 45.5122, -122.6587]
 ];
 
 function initMap()
