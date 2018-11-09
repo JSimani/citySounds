@@ -121,9 +121,8 @@ function LoginControl(controlDiv, map) {
     controlText.innerHTML = 'Login to Spotify';
     controlUI.appendChild(controlText);
 
-    // Setup the click event listeners: simply set the map to Chicago.
     controlUI.addEventListener('click', function() {
-        console.log("Clicked login button");
+        window.location = "login.html";
     });
 
 }
