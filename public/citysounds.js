@@ -2,6 +2,8 @@ var map = null;
 var markers = [];
 var infoWindow = null;
 var curloc = null;
+var access_token = null;
+var params = null;
 
 var cities = [
     ['New York', 40.7128, -74.0060],
@@ -39,16 +41,36 @@ function initMap()
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     infoWindow = new google.maps.InfoWindow();
-
-    var loginControlDiv = document.createElement('div');
-    var centerControl = new LoginControl(loginControlDiv, map);
-
-    loginControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(loginControlDiv);
-
+    
+    getAccessToken();
+    addLoginButton();
 
     getCurrentLocation();
     createMarkers();
+}
+
+function getAccessToken() {
+    var params = {};
+    var e, 
+        r = /([^&;=]+)=?([^&;]*)/g,
+        q = window.location.hash.substring(1);
+    while ( e = r.exec(q)) {
+        params[e[1]] = decodeURIComponent(e[2]);
+    }
+
+    access_token = params.access_token,
+    refresh_token = params.refresh_token,
+    error = params.error;
+
+    console.log("access_token: " + access_token);
+    console.log("refresh_token: " + refresh_token);
+}
+
+function addLoginButton() {
+    var loginControlDiv = document.createElement('div');
+    var centerControl = new LoginControl(loginControlDiv, map);
+    loginControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(loginControlDiv);
 }
 
 
@@ -62,7 +84,7 @@ function createMarkers() {
             title: city[0]
         });
 
-        initializeWindow(marker);
+        initializeInfoWindow(marker);
 
         markers.push(marker);
     }
@@ -101,7 +123,7 @@ function getCurrentLocation() {
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-function initializeWindow(city) {
+function initializeInfoWindow(city) {
     var innerHTML = "<div id='InfoWindow'>" + city.title + "</div>";
 
     city.addListener('click', function() {
@@ -113,18 +135,36 @@ function initializeWindow(city) {
 function LoginControl(controlDiv, map) {
     var controlUI = document.createElement('div');
     controlUI.setAttribute("id", "loginControlUI");
-    controlUI.title = 'Click to login to Spotify';
+    if (access_token == null) {
+        controlUI.title = 'Click to login to Spotify';
+    } else {
+        controlUI.title = 'Already logged into Spotify';
+    }
     controlDiv.appendChild(controlUI);
 
     var controlText = document.createElement('div');
     controlText.setAttribute("id", "loginControlText");
-    controlText.innerHTML = 'Login to Spotify';
+    if (!access_token) {
+        controlText.innerHTML = 'Login to Spotify';
+    } else {
+        // $.ajax({
+        //     url: 'https://api.spotify.com/v1/me',
+        //     headers: {
+        //         'Authorization': 'Bearer ' + access_token
+        //     },
+        //     success: function(response) {
+        //         var userName = userProfileTemplate(response);
+        //     }
+        // });
+        controlText.innerHTML = 'Logged in to Spotify';
+    }
+    
     controlUI.appendChild(controlText);
 
-    controlUI.addEventListener('click', function() {
-        window.location = "login.html";
-    });
-
+    if (!access_token) {
+        controlUI.addEventListener('click', function() {
+            window.location = "/login";
+        });
+    }
 }
-
 
