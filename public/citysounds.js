@@ -145,7 +145,7 @@ function LoginControl(controlDiv, map) {
     var controlText = document.createElement('div');
     controlText.setAttribute("id", "loginControlText");
     if (!access_token) {
-        controlText.innerHTML = 'Login to Spotify';
+        controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
     } else {
         // $.ajax({
         //     url: 'https://api.spotify.com/v1/me',
@@ -156,7 +156,7 @@ function LoginControl(controlDiv, map) {
         //         var userName = userProfileTemplate(response);
         //     }
         // });
-        controlText.innerHTML = 'Logged in to Spotify';
+        controlText.innerHTML = controlText.innerHTML = "Logged into Spotify <img id='spotify' src='spotify.png'/>";;
     }
     
     controlUI.appendChild(controlText);
