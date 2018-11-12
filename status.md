@@ -17,3 +17,6 @@ November 9, 2018
 * Register app with Spotify
 * Connect map interface with spotify api (user can log in, try getting songs for cities (if we're being optimistic. May go into later weeks))
 * Launch app on heroku
+
+## Comments by Ming
+* Okay
