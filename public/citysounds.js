@@ -107,7 +107,7 @@ function addSong(marker) {
                 var rawData = request.responseText;
                 var parsedData = JSON.parse(rawData);
 
-                console.log(parsedData);
+                console.log(parsedData.albums.items);
             }
         }
         request.send();
