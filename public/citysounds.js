@@ -48,7 +48,7 @@ function initMap()
     getCurrentLocation();
     createMarkers();
 
-
+    addSong(markers[2]);
 }
 
 function getAccessToken() {
@@ -91,6 +91,29 @@ function createMarkers() {
         initializeInfoWindow(marker);
 
         markers.push(marker);
+    }
+}
+
+function addSong(marker) {
+    if (access_token) {
+        // var query = 'https://api.spotify.com/v1/search?q=' + marker.title + '&type=track&limit=1';
+        var query = 'https://api.spotify.com/v1/search?q=album:gold%20artist:abba&type=album'
+        var request = new XMLHttpRequest();
+        request.open("GET", query, true);
+        request.setRequestHeader('Authorization', 'Bearer '+ access_token);
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                console.log("readyState changed");
+                var rawData = request.responseText;
+                var parsedData = JSON.parse(rawData);
+
+                console.log(parsedData);
+            }
+        }
+        request.send();
+
+    } else {
+        console.log("Access denied");
     }
 }
 
@@ -166,12 +189,6 @@ function LoginControl(controlDiv, map) {
             localStorage.clear();
 
             window.location = "/";
-
-            // controlText.innerHTML = controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
-
-            // controlUI.addEventListener('click', function() {
-            //     window.location = "/login";
-            // });
         });
     }
 }
