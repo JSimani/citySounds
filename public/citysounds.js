@@ -150,6 +150,7 @@ function LoginControl(controlDiv, map) {
     controlText.setAttribute("id", "loginControlText");
     if (!access_token) {
         controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
+
     } else {
         controlText.innerHTML = controlText.innerHTML = "Logout <img id='spotify' src='spotify.png'/>";
     }
@@ -162,14 +163,15 @@ function LoginControl(controlDiv, map) {
         });
     } else {
         controlUI.addEventListener('click', function() {
-            localStorage.access_token = null;
-            localStorage.refresh_token = null;
+            localStorage.clear();
 
-            controlText.innerHTML = controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
+            window.location = "/";
 
-            controlUI.addEventListener('click', function() {
-                window.location = "/login";
-            });
+            // controlText.innerHTML = controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
+
+            // controlUI.addEventListener('click', function() {
+            //     window.location = "/login";
+            // });
         });
     }
 }
