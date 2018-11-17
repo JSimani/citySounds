@@ -20,3 +20,25 @@ November 9, 2018
 
 ## Comments by Ming
 * Okay
+
+
+
+# Status Report 2
+
+November 16, 2018
+
+## Accomplishments 
+* Registered app with spotify
+* User can log in, spotify api connected, first api call, got ABBA album
+* Fixed bugs with logging in and out
+* Started launching app
+
+## Challenges/Issues
+* Still fixing Heroku app crashing
+* Sending spotify access token through a request header
+* Slow week. Life. Assignment 3. 
+
+## Goals for Next Week
+* Fully get on heroku
+* Start connecting genius api for lyrics
+* Adding artists to city
