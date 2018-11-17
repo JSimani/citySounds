@@ -47,6 +47,8 @@ function initMap()
 
     getCurrentLocation();
     createMarkers();
+
+
 }
 
 function getAccessToken() {
@@ -58,12 +60,14 @@ function getAccessToken() {
         params[e[1]] = decodeURIComponent(e[2]);
     }
 
-    access_token = params.access_token,
-    refresh_token = params.refresh_token,
+    access_token = params.access_token || localStorage.access_token,
+    refresh_token = params.refresh_token || localStorage.refresh_token,
     error = params.error;
 
     console.log("access_token: " + access_token);
     console.log("refresh_token: " + refresh_token);
+    localStorage.access_token = access_token;
+    localStorage.refresh_token = refresh_token;
 }
 
 function addLoginButton() {
@@ -147,16 +151,7 @@ function LoginControl(controlDiv, map) {
     if (!access_token) {
         controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
     } else {
-        // $.ajax({
-        //     url: 'https://api.spotify.com/v1/me',
-        //     headers: {
-        //         'Authorization': 'Bearer ' + access_token
-        //     },
-        //     success: function(response) {
-        //         var userName = userProfileTemplate(response);
-        //     }
-        // });
-        controlText.innerHTML = controlText.innerHTML = "Logged into Spotify <img id='spotify' src='spotify.png'/>";;
+        controlText.innerHTML = controlText.innerHTML = "Logout <img id='spotify' src='spotify.png'/>";
     }
     
     controlUI.appendChild(controlText);
@@ -164,6 +159,17 @@ function LoginControl(controlDiv, map) {
     if (!access_token) {
         controlUI.addEventListener('click', function() {
             window.location = "/login";
+        });
+    } else {
+        controlUI.addEventListener('click', function() {
+            localStorage.access_token = null;
+            localStorage.refresh_token = null;
+
+            controlText.innerHTML = controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
+
+            controlUI.addEventListener('click', function() {
+                window.location = "/login";
+            });
         });
     }
 }
