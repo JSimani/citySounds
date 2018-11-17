@@ -42,3 +42,4 @@ November 16, 2018
 * Fully get on heroku
 * Start connecting genius api for lyrics
 * Adding artists to city
+
