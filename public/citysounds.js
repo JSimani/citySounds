@@ -139,6 +139,7 @@ function addAlbums(marker) {
                     var curTrack = parsedData.albums.items[i];
                     marker.albums.push(curTrack.name + " by " + curTrack.artists[0].name);
                 }
+                
 
                 initializeInfoWindow(marker);
             }
