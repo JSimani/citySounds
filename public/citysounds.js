@@ -134,8 +134,6 @@ function addAlbums(marker) {
                 var rawData = request.responseText;
                 var parsedData = JSON.parse(rawData);
 
-
-                console.log(parsedData);
                 marker.albums = [];
                 for (var i = 0; i < parsedData.albums.items.length; i++) {
                     var curTrack = parsedData.albums.items[i];
@@ -202,7 +200,7 @@ function initializeInfoWindow(city) {
         for (var i = 0; i < city.albums.length; i++) {
             innerHTML += "<p>" + city.albums[i] + "</p>";
         }
-    }
+    }n
     innerHTML += "</div>";
 
     city.addListener('click', function() {
