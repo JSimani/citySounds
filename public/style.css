@@ -35,7 +35,7 @@ html, body {
     vertical-align: middle;
 }
 
-.gm-style .gm-style-iw {
+#InfoWindow {
     width: auto !important;
     height: auto !important;
     top: auto !important;
