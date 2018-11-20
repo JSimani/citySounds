@@ -50,7 +50,9 @@ function initMap()
 
     for (var i = 0; i < markers.length; i++) {
         addSongs(markers[i]);
-    }
+        addAlbums(markers[i]);
+    };
+
 }
 
 function getAccessToken() {
@@ -121,6 +123,39 @@ function addSongs(marker) {
     }
 }
 
+function addAlbums(marker) {
+    if (access_token) {
+        var query = 'https://api.spotify.com/v1/search?q=album:' + marker.title + '&type=album&limit=5';
+        var request = new XMLHttpRequest();
+        request.open("GET", query, true);
+        request.setRequestHeader('Authorization', 'Bearer '+ access_token);
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                var rawData = request.responseText;
+                var parsedData = JSON.parse(rawData);
+
+
+                console.log(parsedData);
+                marker.albums = [];
+                for (var i = 0; i < parsedData.albums.items.length; i++) {
+                    var curTrack = parsedData.albums.items[i];
+                    marker.albums.push(curTrack.name + " by " + curTrack.artists[0].name);
+                }
+
+                initializeInfoWindow(marker);
+            }
+        }
+        request.send();
+
+    } else {
+        console.log("Access denied");
+    }
+}
+
+
+
+
+
 function getCurrentLocation() {
     var options = {
         enableHighAccuracy: true
@@ -157,8 +192,15 @@ function getCurrentLocation() {
 function initializeInfoWindow(city) {
     var innerHTML = "<div id='InfoWindow'><p>" + city.title + "</p>";
     if (city.songs) {
+        innerHTML += "<p>Songs: </p>";
         for (var i = 0; i < city.songs.length; i++) {
             innerHTML += "<p>" + city.songs[i] + "</p>";
+        }
+    }
+    if (city.albums){
+        innerHTML += "<p>Albums: </p>";
+        for (var i = 0; i < city.albums.length; i++) {
+            innerHTML += "<p>" + city.albums[i] + "</p>";
         }
     }
     innerHTML += "</div>";
