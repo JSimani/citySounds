@@ -48,7 +48,9 @@ function initMap()
     getCurrentLocation();
     createMarkers();
 
-    addSong(markers[2]);
+    for (var i = 0; i < markers.length; i++) {
+        addSongs(markers[i]);
+    }
 }
 
 function getAccessToken() {
@@ -64,8 +66,6 @@ function getAccessToken() {
     refresh_token = params.refresh_token || localStorage.refresh_token,
     error = params.error;
 
-    console.log("access_token: " + access_token);
-    console.log("refresh_token: " + refresh_token);
     localStorage.access_token = access_token;
     localStorage.refresh_token = refresh_token;
 }
@@ -94,20 +94,24 @@ function createMarkers() {
     }
 }
 
-function addSong(marker) {
+function addSongs(marker) {
     if (access_token) {
-        // var query = 'https://api.spotify.com/v1/search?q=' + marker.title + '&type=track&limit=1';
-        var query = 'https://api.spotify.com/v1/search?q=album:gold%20artist:abba&type=album'
+        var query = 'https://api.spotify.com/v1/search?q=track:' + marker.title + '&type=track&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
         request.setRequestHeader('Authorization', 'Bearer '+ access_token);
         request.onreadystatechange = function() {
             if (request.readyState == 4 && request.status == 200) {
-                console.log("readyState changed");
                 var rawData = request.responseText;
                 var parsedData = JSON.parse(rawData);
 
-                console.log(parsedData.albums.items);
+                marker.songs = [];
+                for (var i = 0; i < parsedData.tracks.items.length; i++) {
+                    var curTrack = parsedData.tracks.items[i];
+                    marker.songs.push(curTrack.name + " by " + curTrack.artists[0].name);
+                }
+
+                initializeInfoWindow(marker);
             }
         }
         request.send();
@@ -151,7 +155,13 @@ function getCurrentLocation() {
 }
 
 function initializeInfoWindow(city) {
-    var innerHTML = "<div id='InfoWindow'>" + city.title + "</div>";
+    var innerHTML = "<div id='InfoWindow'><p>" + city.title + "</p>";
+    if (city.songs) {
+        for (var i = 0; i < city.songs.length; i++) {
+            innerHTML += "<p>" + city.songs[i] + "</p>";
+        }
+    }
+    innerHTML += "</div>";
 
     city.addListener('click', function() {
         infoWindow.setContent(innerHTML);
