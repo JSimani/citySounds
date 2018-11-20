@@ -34,3 +34,7 @@ html, body {
     border-radius: 100%;
     vertical-align: middle;
 }
+
+#InfoWindow {
+    background-color: rgb(101, 210, 110);
+}
