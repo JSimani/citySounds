@@ -109,8 +109,7 @@ function addSongs(marker) {
 
                 marker.songs = [];
                 for (var i = 0; i < parsedData.tracks.items.length; i++) {
-                    var curTrack = parsedData.tracks.items[i];
-                    marker.songs.push(curTrack.name + " by " + curTrack.artists[0].name);
+                    marker.songs.push(parsedData.tracks.items[i]);
                 }
 
                 initializeInfoWindow(marker);
@@ -136,11 +135,9 @@ function addAlbums(marker) {
 
                 marker.albums = [];
                 for (var i = 0; i < parsedData.albums.items.length; i++) {
-                    var curTrack = parsedData.albums.items[i];
-                    marker.albums.push(curTrack.name + " by " + curTrack.artists[0].name);
+                    marker.albums.push(parsedData.albums.items[i]);
                 }
                 
-
                 initializeInfoWindow(marker);
             }
         }
@@ -193,13 +190,18 @@ function initializeInfoWindow(city) {
     if (city.songs) {
         innerHTML += "<p>Songs: </p>";
         for (var i = 0; i < city.songs.length; i++) {
-            innerHTML += "<p>" + city.songs[i] + "</p>";
+            var curTrack = city.songs[i];
+            innerHTML += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
         }
     }
     if (city.albums){
+        if (city.songs) {
+            innerHTML += "<br>";
+        }
         innerHTML += "<p>Albums: </p>";
         for (var i = 0; i < city.albums.length; i++) {
-            innerHTML += "<p>" + city.albums[i] + "</p>";
+            var curAlbum = city.albums[i];
+            innerHTML += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
         }
     }
     innerHTML += "</div>";
