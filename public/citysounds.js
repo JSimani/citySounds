@@ -40,7 +40,18 @@ function initMap()
 	};   
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    infoWindow = new google.maps.InfoWindow();
+    infoWindow = new InfoBubble({
+      map: map,
+      backgroundColor: 'rgb(101, 210, 110)',
+      borderRadius: 5,
+      arrowSize: 10,
+      borderWidth: 1,
+      borderColor: 'rgb(101, 210, 110)',
+      disableAutoPan: true,
+      arrowPosition: 30,
+      backgroundClassName: 'transparent',
+      arrowStyle: 2
+});
     
     getAccessToken();
     addLoginButton();
@@ -186,7 +197,7 @@ function getCurrentLocation() {
 }
 
 function initializeInfoWindow(city) {
-    var innerHTML = "<div id='InfoWindow'><p>" + city.title + "</p>";
+    var innerHTML = "<div id='iw-container'><div class='iw-content'><p>" + city.title + "</p>";
     if (city.songs) {
         innerHTML += "<p>Songs: </p>";
         for (var i = 0; i < city.songs.length; i++) {
@@ -204,11 +215,16 @@ function initializeInfoWindow(city) {
             innerHTML += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
         }
     }
-    innerHTML += "</div>";
+    innerHTML += "</div></div>";
+
+    
 
     city.addListener('click', function() {
+        // infoWindow.setContent(innerHTML);
         infoWindow.setContent(innerHTML);
+        // infoWindow.setOptions({maxWidth:250}); 
         infoWindow.open(map, city);
+        console.log(infoWindow);
     });
 }
 
