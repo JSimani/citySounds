@@ -201,7 +201,7 @@ function initializeInfoWindow(city) {
         for (var i = 0; i < city.albums.length; i++) {
             innerHTML += "<p>" + city.albums[i] + "</p>";
         }
-    }n
+    }
     innerHTML += "</div>";
 
     city.addListener('click', function() {
