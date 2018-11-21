@@ -41,27 +41,20 @@ function initMap()
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     infoWindow = new InfoBubble({
-      map: map,
-      backgroundColor: 'rgb(101, 210, 110)',
-      borderRadius: 5,borderWidth: 1,
-      borderColor: 'rgb(101, 210, 110)',
-      disableAutoPan: true,
-      arrowPosition: 30,
-      backgroundClassName: 'transparent',
-      arrowStyle: 2
-});
+        map: map,
+        backgroundColor: 'rgb(101, 210, 110)',
+        borderRadius: 5,borderWidth: 1,
+        borderColor: 'rgb(101, 210, 110)',
+        disableAutoPan: true,
+        arrowPosition: 30,
+        backgroundClassName: 'transparent',
+        arrowStyle: 2
+    });
     
-    getAccessToken();
     addLoginButton();
 
     getCurrentLocation();
     createMarkers();
-
-    for (var i = 0; i < markers.length; i++) {
-        addSongs(markers[i]);
-        addAlbums(markers[i]);
-    };
-
 }
 
 function getAccessToken() {
@@ -73,8 +66,8 @@ function getAccessToken() {
         params[e[1]] = decodeURIComponent(e[2]);
     }
 
-    access_token = params.access_token || localStorage.access_token,
-    refresh_token = params.refresh_token || localStorage.refresh_token,
+    access_token = params.access_token || localStorage.access_token;
+    refresh_token = params.refresh_token || localStorage.refresh_token;
     error = params.error;
 
     localStorage.access_token = access_token;
@@ -102,6 +95,13 @@ function createMarkers() {
         initializeInfoWindow(marker);
 
         markers.push(marker);
+
+        addSongs(marker);
+        addAlbums(marker);
+
+        if (markers.length == 3) {
+            // addArtists(marker);
+        }
     }
 }
 
@@ -154,7 +154,27 @@ function addAlbums(marker) {
 }
 
 function addArtists(marker) {
+if (access_token) {
+        var query = 'https://api.spotify.com/v1/search?q=artist:' + marker.title + '&type=artist&limit=5';
+        var request = new XMLHttpRequest();
+        request.open("GET", query, true);
+        request.setRequestHeader('Authorization', 'Bearer '+ access_token);
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                var rawData = request.responseText;
+                var parsedData = JSON.parse(rawData);
 
+                marker.artists = [];
+                for (var i = 0; i < parsedData.artists.items.length; i++) {
+                    marker.artists.push(parsedData.artists.items[i]);
+                }
+                
+                initializeInfoWindow(marker);
+            }
+        }
+        request.send();
+
+    } 
 }
 
 function getCurrentLocation() {
@@ -223,7 +243,10 @@ function initializeInfoWindow(city) {
 function LoginControl(controlDiv, map) {
     var controlUI = document.createElement('div');
     controlUI.setAttribute("id", "loginControlUI");
-    if (access_token == null) {
+
+    getAccessToken();
+
+    if (access_token == "null") {
         controlUI.title = 'Click to login to Spotify';
     } else {
         controlUI.title = 'Already logged into Spotify';
@@ -232,7 +255,8 @@ function LoginControl(controlDiv, map) {
 
     var controlText = document.createElement('div');
     controlText.setAttribute("id", "loginControlText");
-    if (!access_token) {
+
+    if (access_token == "null") {
         controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
 
     } else {
