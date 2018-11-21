@@ -35,7 +35,7 @@ html, body {
     vertical-align: middle;
 }
 
-#InfoWindow {
+.iw-container {
     width: auto !important;
     height: auto !important;
     top: auto !important;
@@ -44,4 +44,15 @@ html, body {
     background-color: rgb(101, 210, 110);
     border: 1px solid rgb(101, 210, 110);
     border-radius: 2px 2px 10px 10px;
+}
+
+#iw-title {
+    font-size: 20px;
+    padding-bottom: 0px;
+}
+
+#iw-subtitle {
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: -5px;
 }

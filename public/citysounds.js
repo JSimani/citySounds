@@ -98,15 +98,12 @@ function createMarkers() {
 
         addSongs(marker);
         addAlbums(marker);
-
-        if (markers.length == 3) {
-            // addArtists(marker);
-        }
+        addArtists(marker);
     }
 }
 
 function addSongs(marker) {
-    if (access_token) {
+    if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=track:' + marker.title + '&type=track&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
@@ -130,7 +127,7 @@ function addSongs(marker) {
 }
 
 function addAlbums(marker) {
-    if (access_token) {
+    if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=album:' + marker.title + '&type=album&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
@@ -154,7 +151,7 @@ function addAlbums(marker) {
 }
 
 function addArtists(marker) {
-if (access_token) {
+if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=artist:' + marker.title + '&type=artist&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
@@ -211,31 +208,40 @@ function getCurrentLocation() {
 }
 
 function initializeInfoWindow(city) {
-    var innerHTML = "<div id='InfoWindow'><p>" + city.title + "</p>";
-    if (!access_token) {
+    var innerHTML = "<div class='iw-container'><p id='iw-title'>" + city.title + "</p>";
+    if (!hasAccess()) {
         innerHTML += "<p><a href='/login'>Login to Spotify to View Songs</a></p>"; 
-    }
-    if (city.songs) {
-        innerHTML += "<p>Songs: </p>";
-        for (var i = 0; i < city.songs.length; i++) {
-            var curTrack = city.songs[i];
-            innerHTML += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
-        }
-    }
-    if (city.albums){
+    } else {
         if (city.songs) {
-            innerHTML += "<br>";
+            innerHTML += "<p id='iw-subtitle'>Songs: </p>";
+            for (var i = 0; i < city.songs.length; i++) {
+                var curTrack = city.songs[i];
+                innerHTML += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+            }
         }
-        innerHTML += "<p>Albums: </p>";
-        for (var i = 0; i < city.albums.length; i++) {
-            var curAlbum = city.albums[i];
-            innerHTML += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+
+        if (city.albums) {
+            innerHTML += "<p id='iw-subtitle'>Albums: </p>";
+            for (var i = 0; i < city.albums.length; i++) {
+                var curAlbum = city.albums[i];
+                innerHTML += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+            }
+        }
+
+        if (city.artists) {
+            innerHTML += "<p id='iw-subtitle'>Artists: </p>";
+            for (var i = 0; i < city.artists.length; i++) {
+                var curArtist = city.artists[i];
+                innerHTML += "<p><a href='" + curArtist.external_urls.spotify + "'>" + curArtist.name + "</a></p>";
+            }
         }
     }
+
     innerHTML += "</div>";
 
     city.addListener('click', function() {
         infoWindow.setContent(innerHTML);
+        infoWindow.setMaxHeight("auto");
         infoWindow.open(map, city);
     });
 }
@@ -246,7 +252,7 @@ function LoginControl(controlDiv, map) {
 
     getAccessToken();
 
-    if (access_token == "null") {
+    if (!hasAccess()) {
         controlUI.title = 'Click to login to Spotify';
     } else {
         controlUI.title = 'Already logged into Spotify';
@@ -256,7 +262,7 @@ function LoginControl(controlDiv, map) {
     var controlText = document.createElement('div');
     controlText.setAttribute("id", "loginControlText");
 
-    if (access_token == "null") {
+    if (!hasAccess()) {
         controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
 
     } else {
@@ -276,5 +282,9 @@ function LoginControl(controlDiv, map) {
             window.location = "/";
         });
     }
+}
+
+function hasAccess() {
+    return !(access_token == "null" || access_token == "undefined" || !access_token);
 }
 
