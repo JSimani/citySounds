@@ -40,21 +40,43 @@ function initMap()
 	};   
 				
 	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    infoWindow = new InfoBubble({
-        map: map,
-        backgroundColor: 'rgb(101, 210, 110)',
-        borderRadius: 5,borderWidth: 1,
-        borderColor: 'rgb(101, 210, 110)',
-        disableAutoPan: true,
-        arrowPosition: 30,
-        backgroundClassName: 'transparent',
-        arrowStyle: 2
-    });
     
     addLoginButton();
-
+    addOverlay();
     getCurrentLocation();
     createMarkers();
+}
+
+function addOverlay() {
+    var closebtn = document.createElement('a');
+    closebtn.setAttribute("href", "javascript:void(0)");
+    closebtn.setAttribute("class", "closebtn");
+    closebtn.setAttribute("onclick", "closeOverlay()");
+    closebtn.innerHTML = "&times;";
+
+    var overlayContent = document.createElement('div');
+    overlayContent.setAttribute("id", "overlay-content");
+    overlayContent.innerHTML = "<p>How'd you get here?!</p>";
+
+    var mapObject = document.getElementById("map_canvas");
+
+    var overlay = document.createElement('div');
+    overlay.setAttribute("id", "overlay");
+
+    overlay.appendChild(closebtn);
+    overlay.appendChild(overlayContent);
+
+    mapObject.appendChild(overlay);
+
+    infoWindow = document.getElementById("overlay-content");
+}
+
+function openOverlay() {
+    document.getElementById("overlay").style.width = "100%";
+}
+
+function closeOverlay() {
+    document.getElementById("overlay").style.width = "0%";
 }
 
 function getAccessToken() {
@@ -74,13 +96,16 @@ function getAccessToken() {
     localStorage.refresh_token = refresh_token;
 }
 
+function hasAccess() {
+    return !(access_token == "null" || access_token == "undefined" || !access_token);
+}
+
 function addLoginButton() {
     var loginControlDiv = document.createElement('div');
     var centerControl = new LoginControl(loginControlDiv, map);
     loginControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(loginControlDiv);
 }
-
 
 function createMarkers() {
     for (var i = 0; i < cities.length; i++) {
@@ -151,7 +176,7 @@ function addAlbums(marker) {
 }
 
 function addArtists(marker) {
-if (hasAccess()) {
+    if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=artist:' + marker.title + '&type=artist&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
@@ -208,41 +233,38 @@ function getCurrentLocation() {
 }
 
 function initializeInfoWindow(city) {
-    var innerHTML = "<div class='iw-container'><p id='iw-title'>" + city.title + "</p>";
+    var info = "<p id='iw-title'>" + city.title + "</p>";
     if (!hasAccess()) {
-        innerHTML += "<p><a href='/login'>Login to Spotify to View Songs</a></p>"; 
+        info += "<p><a href='/login'>Login to Spotify to View Songs</a></p>"; 
     } else {
         if (city.songs) {
-            innerHTML += "<p id='iw-subtitle'>Songs: </p>";
+            info += "<p id='iw-subtitle'>Songs: </p>";
             for (var i = 0; i < city.songs.length; i++) {
                 var curTrack = city.songs[i];
-                innerHTML += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+                info += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
             }
         }
 
         if (city.albums) {
-            innerHTML += "<p id='iw-subtitle'>Albums: </p>";
+            info += "<p id='iw-subtitle'>Albums: </p>";
             for (var i = 0; i < city.albums.length; i++) {
                 var curAlbum = city.albums[i];
-                innerHTML += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+                info += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
             }
         }
 
         if (city.artists) {
-            innerHTML += "<p id='iw-subtitle'>Artists: </p>";
+            info += "<p id='iw-subtitle'>Artists: </p>";
             for (var i = 0; i < city.artists.length; i++) {
                 var curArtist = city.artists[i];
-                innerHTML += "<p><a href='" + curArtist.external_urls.spotify + "'>" + curArtist.name + "</a></p>";
+                info += "<p><a href='" + curArtist.external_urls.spotify + "'>" + curArtist.name + "</a></p>";
             }
         }
     }
 
-    innerHTML += "</div>";
-
     city.addListener('click', function() {
-        infoWindow.setContent(innerHTML);
-        infoWindow.setMaxHeight("auto");
-        infoWindow.open(map, city);
+        infoWindow.innerHTML = info;
+        openOverlay();
     });
 }
 
@@ -266,7 +288,7 @@ function LoginControl(controlDiv, map) {
         controlText.innerHTML = "Login to Spotify <img id='spotify' src='spotify.png'/>";
 
     } else {
-        controlText.innerHTML = controlText.innerHTML = "Logout <img id='spotify' src='spotify.png'/>";
+        controlText.innerHTML = "Logout <img id='spotify' src='spotify.png'/>";
     }
     
     controlUI.appendChild(controlText);
@@ -282,9 +304,5 @@ function LoginControl(controlDiv, map) {
             window.location = "/";
         });
     }
-}
-
-function hasAccess() {
-    return !(access_token == "null" || access_token == "undefined" || !access_token);
 }
 
