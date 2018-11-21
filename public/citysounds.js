@@ -50,9 +50,9 @@ function initMap()
 function addOverlay() {
     var closebtn = document.createElement('a');
     closebtn.setAttribute("href", "javascript:void(0)");
-    closebtn.setAttribute("class", "closebtn");
+    closebtn.setAttribute("id", "closebtn");
     closebtn.setAttribute("onclick", "closeOverlay()");
-    closebtn.innerHTML = "&times;";
+    closebtn.innerHTML = "<a>&times;</a>";
 
     var overlayContent = document.createElement('div');
     overlayContent.setAttribute("id", "overlay-content");
@@ -239,6 +239,7 @@ function initializeInfoWindow(city) {
     } else {
         if (city.songs) {
             info += "<p id='iw-subtitle'>Songs: </p>";
+
             for (var i = 0; i < city.songs.length; i++) {
                 var curTrack = city.songs[i];
                 info += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
@@ -246,7 +247,12 @@ function initializeInfoWindow(city) {
         }
 
         if (city.albums) {
+            if (city.songs) {
+                info += "<br>";
+            }
+
             info += "<p id='iw-subtitle'>Albums: </p>";
+
             for (var i = 0; i < city.albums.length; i++) {
                 var curAlbum = city.albums[i];
                 info += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
@@ -254,7 +260,12 @@ function initializeInfoWindow(city) {
         }
 
         if (city.artists) {
+            if (city.songs || city.albums) {
+                info += "<br>";
+            }
+
             info += "<p id='iw-subtitle'>Artists: </p>";
+
             for (var i = 0; i < city.artists.length; i++) {
                 var curArtist = city.artists[i];
                 info += "<p><a href='" + curArtist.external_urls.spotify + "'>" + curArtist.name + "</a></p>";

@@ -37,11 +37,12 @@ html, body {
 
 #iw-title {
     font-size: 40px;
+    line-height: 50%;
 }
 
 #iw-subtitle {
     font-size: 25px;
-    padding-bottom: -5px;
+    line-height: 50%;
 }
 
 #overlay {
@@ -59,44 +60,36 @@ html, body {
 
 #overlay-content {
     position: relative;
-    width: 100%; /* 100% width */
-    text-align: left; /* Centered text/links */
+    width: 100%; 
+    text-align: left; 
     padding: 8px;
     color: rgb(101, 210, 110);
 }
 
-/* The navigation links inside the overlay */
 #overlay-content a {
-    
     text-decoration: none;
-    display: block; /* Display block instead of inline */
-    transition: 0.3s; /* Transition effects on hover (color) */
+    display: block; 
+    transition: 0.3s; 
     color: rgb(101, 210, 110);
 }
 
-/* When you mouse over the navigation links, change their color */
-#overlay-content a:hover, .overlay-content a:focus {
+#overlay-content a:hover, #overlay-content a:focus {
     color: #f1f1f1;
 }
 
-/* Position the close button (top right corner) */
-#overlay .closebtn {
+#closebtn {
     position: absolute;
     top: 20px;
     right: 45px;
     font-size: 60px;
     color: rgb(101, 210, 110);
     z-index: 1;
+    text-decoration: none;
 }
 
-/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
-@media screen and (max-height: 450px) {
-    #overlay-content a {font-size: 20px}
-    #overlay .closebtn {
-        font-size: 40px;
-        top: 15px;
-        right: 35px;
-    }
+#closebtn a:hover, #closebtn a:focus {
+    color: #f1f1f1;
+    transition: 0.3s;
 }
 
 
