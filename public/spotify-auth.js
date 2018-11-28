@@ -28,7 +28,8 @@ function getAccessToken() {
     localStorage.expires_on = expires_on;
 
     var time = new Date();
-    if (time.getTime() > expires_on) {
+    console.log("Expires on: " + expires_on);
+    if (hasAccess() && time.getTime() > expires_on) {
         refreshToken();
     }
 }
