@@ -40,8 +40,7 @@ function initSpotify() {
 
 function playMedia(spotify_uri) {
     var currentState = player.getCurrentState();
-    console.log("currentState: ");
-    console.log(currentState);
+    // console.log("currentState: ", currentState);
 
     var query = "https://api.spotify.com/v1/me/player/play?device_id=" + device;
     var request = new XMLHttpRequest();
@@ -64,11 +63,10 @@ function playMedia(spotify_uri) {
             // }
             
             // initializeInfoWindow(marker);
-            console.log("readyState success", "currentState: ", currentState);
+            // console.log("readyState success", "currentState: ", currentState);
         }
     }
     request.send(body);
-
 }
 
 
