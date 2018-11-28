@@ -43,7 +43,7 @@ app.get('/login', function(req, res) {
     res.cookie(stateKey, state);
 
     // your application requests authorization
-    var scope = '';
+    var scope = "streaming user-read-birthdate user-read-email user-read-private";
     res.redirect('https://accounts.spotify.com/authorize?' +
                 querystring.stringify({
                     response_type: 'code',
@@ -88,10 +88,10 @@ app.get('/callback', function(req, res) {
 
                 var access_token  = body.access_token,
                     refresh_token = body.refresh_token,
+                    account_type  = null,
                     expires_in    = body.expires_in;
 
                 var time = new Date();
-
 
                 var options = {
                     url: 'https://api.spotify.com/v1/me',
@@ -102,15 +102,17 @@ app.get('/callback', function(req, res) {
                 // use the access token to access the Spotify Web API
                 request.get(options, function(error, response, body) {
                     console.log(body);
-                });
+                    account_type = body.product;
 
-                // we can also pass the token to the browser to make requests from there
-                res.redirect('/#' +
+                    // we can also pass the token to the browser to make requests from there
+                    res.redirect('/#' +
                     querystring.stringify({
                         access_token: access_token,
                         refresh_token: refresh_token, 
-                        expires_on: time.getTime() + (expires_in * 1000)
-                }));
+                        expires_on: time.getTime() + (expires_in * 1000),
+                        account_type: account_type
+                    }));
+                });
             } else {
                 res.redirect('/#' +
                     querystring.stringify({

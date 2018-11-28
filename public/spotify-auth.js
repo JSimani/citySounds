@@ -21,11 +21,13 @@ function getAccessToken() {
     access_token = params.access_token || localStorage.access_token;
     refresh_token = params.refresh_token || localStorage.refresh_token;
     expires_on = params.expires_on || localStorage.expires_on;
+    account_type = params.account_type || localStorage.account_type;
     error = params.error;
 
     localStorage.access_token = access_token;
     localStorage.refresh_token = refresh_token;
     localStorage.expires_on = expires_on;
+    localStorage.account_type = account_type;
 
     var time = new Date();
     console.log("Expires on: " + expires_on);
