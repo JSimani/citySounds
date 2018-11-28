@@ -11,11 +11,17 @@ function initialize()
     infoWindow = addOverlay();
     getCurrentLocation();
     markers = createMarkers();
+    initSpotify();
 }
 
 function initSpotify() {
+    var script = document.createElement("script"); 
+    script.src = "https://sdk.scdn.co/spotify-player.js"; 
+
+    document.head.appendChild(script);  
+
     window.onSpotifyWebPlaybackSDKReady = () => {
-        const token = '[My Spotify Web API access token]';
+        const token = access_token;
         const player = new Spotify.Player({
             name: 'Web Playback SDK Quick Start Player',
             getOAuthToken: cb => { cb(token); }

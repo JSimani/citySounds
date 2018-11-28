@@ -30,7 +30,7 @@ function getAccessToken() {
     localStorage.account_type = account_type;
 
     var time = new Date();
-    console.log("Expires on: " + expires_on);
+
     if (hasAccess() && time.getTime() > expires_on) {
         refreshToken();
     }
