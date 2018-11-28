@@ -20,10 +20,38 @@ function getAccessToken() {
 
     access_token = params.access_token || localStorage.access_token;
     refresh_token = params.refresh_token || localStorage.refresh_token;
+    expires_on = params.expires_on || localStorage.expires_on;
     error = params.error;
 
     localStorage.access_token = access_token;
     localStorage.refresh_token = refresh_token;
+    localStorage.expires_on = expires_on;
+
+    var time = new Date();
+    if (time.getTime() > expires_on) {
+        refreshToken();
+    }
+}
+
+function refreshToken() {
+    var request = new XMLHttpRequest();
+    var query = "/refresh_token?refresh_token=" + refresh_token;
+    request.open("GET", query, true);
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            var rawData = request.responseText;
+            var parsedData = JSON.parse(rawData);
+
+            var old_access = access_token;
+            access_token = parsedData.access_token;
+            localStorage.access_token = access_token;
+            var time = new Date();
+            expires_on = time.getTime() + (3600 * 1000);
+            localStorage.expires_on = expires_on;
+            markers = createMarkers();
+        }
+    }
+    request.send();
 }
 
 function LoginControl(controlDiv, map) {

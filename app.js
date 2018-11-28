@@ -15,8 +15,8 @@ var cookieParser = require('cookie-parser');
 
 var client_id = '8e661acc4ece4137913cb751c3a8c1df'; // Your client id
 var client_secret = '95f5184b63484c709a71ecc87851bd07'; // Your secret
-// var redirect_uri = 'http://localhost:8000/callback';
-var redirect_uri = 'http://citysounds20.herokuapp.com/callback';
+var redirect_uri = 'http://localhost:8000/callback';
+// var redirect_uri = 'http://citysounds20.herokuapp.com/callback';
 
 var generateRandomString = function(length) {
     var text = '';
@@ -87,7 +87,11 @@ app.get('/callback', function(req, res) {
             if (!error && response.statusCode === 200) {
 
                 var access_token  = body.access_token,
-                    refresh_token = body.refresh_token;
+                    refresh_token = body.refresh_token,
+                    expires_in    = body.expires_in;
+
+                var time = new Date();
+
 
                 var options = {
                     url: 'https://api.spotify.com/v1/me',
@@ -104,7 +108,8 @@ app.get('/callback', function(req, res) {
                 res.redirect('/#' +
                     querystring.stringify({
                         access_token: access_token,
-                        refresh_token: refresh_token
+                        refresh_token: refresh_token, 
+                        expires_on: time.getTime() + (expires_in * 1000)
                 }));
             } else {
                 res.redirect('/#' +
