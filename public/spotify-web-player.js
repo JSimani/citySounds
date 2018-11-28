@@ -23,6 +23,9 @@ function initSpotify() {
         // Ready
         player.addListener('ready', ({ device_id }) => {
             console.log('Ready with Device ID', device_id);
+            device = device_id;
+            console.log("device: " + device);
+            playMedia("spotify:album:78yPA5hNyDnuTF42jJyblN");
         });
 
         // Not Ready
@@ -34,3 +37,43 @@ function initSpotify() {
         player.connect();
     };
 }
+
+function playMedia(spotify_uri) {
+    var currentState = player.getCurrentState();
+    console.log("currentState: ");
+    console.log(currentState);
+
+    var query = "https://api.spotify.com/v1/me/player/play?device_id=" + device;
+    var request = new XMLHttpRequest();
+    request.open("PUT", query, true);
+    request.setRequestHeader('Authorization', 'Bearer '+ access_token);
+    var data = {
+        context_uri: spotify_uri
+    };
+    var body = JSON.stringify(data);
+
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            // var rawData = request.responseText;
+            // var parsedData = JSON.parse(rawData);
+
+            // marker.albums = [];
+            // for (var i = 0; i < parsedData.albums.items.length; i++) {
+            //     console.log(parsedData.albums.items[i]);
+            //     marker.albums.push(parsedData.albums.items[i]);
+            // }
+            
+            // initializeInfoWindow(marker);
+            console.log("readyState success", "currentState: ", currentState);
+        }
+    }
+    request.send(body);
+
+}
+
+
+
+
+
+
+

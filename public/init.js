@@ -2,6 +2,7 @@ var markers = [];
 var infoWindow = null;
 var curloc = null;
 var params = null;
+var device = null;
 
 function initialize()
 {

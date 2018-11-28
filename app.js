@@ -15,8 +15,8 @@ var cookieParser = require('cookie-parser');
 
 var client_id = '8e661acc4ece4137913cb751c3a8c1df'; // Your client id
 var client_secret = '95f5184b63484c709a71ecc87851bd07'; // Your secret
-// var redirect_uri = 'http://localhost:8000/callback';
-var redirect_uri = 'http://citysounds20.herokuapp.com/callback';
+var redirect_uri = 'http://localhost:8000/callback';
+// var redirect_uri = 'http://citysounds20.herokuapp.com/callback';
 
 var generateRandomString = function(length) {
     var text = '';
@@ -43,7 +43,7 @@ app.get('/login', function(req, res) {
     res.cookie(stateKey, state);
 
     // your application requests authorization
-    var scope = "streaming user-read-birthdate user-read-email user-read-private";
+    var scope = "streaming user-read-birthdate user-read-email user-read-private user-modify-playback-state";
     res.redirect('https://accounts.spotify.com/authorize?' +
                 querystring.stringify({
                     response_type: 'code',

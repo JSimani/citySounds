@@ -28,18 +28,16 @@ function addAlbums(marker) {
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
         request.setRequestHeader('Authorization', 'Bearer '+ access_token);
-        request.onreadystatechange = function() {
-            if (request.readyState == 4 && request.status == 200) {
-                var rawData = request.responseText;
-                var parsedData = JSON.parse(rawData);
+        request.onload = function() {
+            var rawData = request.responseText;
+            var parsedData = JSON.parse(rawData);
 
-                marker.albums = [];
-                for (var i = 0; i < parsedData.albums.items.length; i++) {
-                    marker.albums.push(parsedData.albums.items[i]);
-                }
-                
-                initializeInfoWindow(marker);
+            marker.albums = [];
+            for (var i = 0; i < parsedData.albums.items.length; i++) {
+                marker.albums.push(parsedData.albums.items[i]);
             }
+            
+            initializeInfoWindow(marker);
         }
         request.send();
 
