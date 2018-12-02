@@ -43,3 +43,25 @@ November 16, 2018
 * Start connecting genius api for lyrics
 * Adding artists to city
 
+
+# Status Report 3
+
+November 30, 2018
+
+## Accomplishments 
+* Got songs, albums, and artists related to each city from Spotify
+* Redirect to Spotify website once link to song, album, or artist is clicked
+* Utilized refresh token in cases when access token expires
+* Got app on heroku
+* Updated styling for info window
+* Updated favicon
+
+## Challenges/Issues
+* Still trying to figure out how to get Spotify internal player to work
+* Lots of time spent trying to figure out styling/formatting
+
+## Goals for Next Week
+* Get internal Spotify player to work
+* Start connecting genius api for lyrics
+
+
