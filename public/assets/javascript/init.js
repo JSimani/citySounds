@@ -57,7 +57,7 @@ function initializeInfoWindow(marker) {
 
             for (var i = 0; i < marker.songs.length; i++) {
                 var curTrack = marker.songs[i];
-                info += "<p><a href='" + curTrack.external_urls.spotify + "'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+                info += "<p><a href='" + curTrack.external_urls.spotify + "' target='_blank'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
             }
         }
 
@@ -70,7 +70,7 @@ function initializeInfoWindow(marker) {
 
             for (var i = 0; i < marker.albums.length; i++) {
                 var curAlbum = marker.albums[i];
-                info += "<p><a href='" + curAlbum.external_urls.spotify + "'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+                info += "<p><a href='" + curAlbum.external_urls.spotify + "' target='_blank'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
             }
         }
 
@@ -83,7 +83,7 @@ function initializeInfoWindow(marker) {
 
             for (var i = 0; i < marker.artists.length; i++) {
                 var curArtist = marker.artists[i];
-                info += "<p><a href='" + curArtist.external_urls.spotify + "'>" + curArtist.name + "</a></p>";
+                info += "<p><a href='" + curArtist.external_urls.spotify + "' target='_blank'>" + curArtist.name + "</a></p>";
             }
         }
     }
