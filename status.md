@@ -64,4 +64,7 @@ November 30, 2018
 * Get internal Spotify player to work
 * Start connecting genius api for lyrics
 
-
+# Comments by Ming
+* I really liked what I saw on citysounds20. Very polished.
+* Honestly, the Spotify player is bonus
+* "Start connecting genius api " => Interesting. Another team is using MusicMatch..
