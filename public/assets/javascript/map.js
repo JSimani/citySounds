@@ -53,7 +53,10 @@ function createMarkers() {
         var marker = new google.maps.Marker({
             position: {lat: city[1], lng: city[2]},
             map: map,
-            title: city[0]
+            title: city[0],
+            songs: [],
+            albums: [],
+            artists: []
         });
 
         initializeInfoWindow(marker);
