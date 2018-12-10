@@ -91,10 +91,7 @@ function PlayerControl(controlDiv, map) {
     controlDiv.appendChild(controlUI);
 
     var controlText = document.createElement('div');
-    controlText.setAttribute("id", "playerControlText");
-
-    controlText.innerHTML = "<img id='player-button' src='assets/images/play.png' onclick='player.resume()' alt='play'/><img id='player-button' src='assets/images/pause.png' onclick='player.pause()' alt='pause'/>";
-    
+    controlText.setAttribute("id", "playerControlText");    
     controlUI.appendChild(controlText);
 }
 
