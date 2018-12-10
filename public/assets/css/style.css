@@ -90,6 +90,7 @@ html, body {
     color: rgb(101, 210, 110);
     z-index: 1;
     text-decoration: none;
+    transition: 0.5s;
 }
 
 #closebtn a:hover, #closebtn a:focus {

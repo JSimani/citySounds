@@ -10,6 +10,9 @@ function addSongs(marker) {
                 var parsedData = JSON.parse(rawData);
 
                 marker.songs = [];
+                if (!parsedData.tracks) {
+                    return;
+                }
                 for (var i = 0; i < parsedData.tracks.items.length; i++) {
                     marker.songs.push(parsedData.tracks.items[i]);
                 }
@@ -33,6 +36,9 @@ function addAlbums(marker) {
             var parsedData = JSON.parse(rawData);
 
             marker.albums = [];
+            if (!parsedData.albums) {
+                return;
+            }
             for (var i = 0; i < parsedData.albums.items.length; i++) {
                 marker.albums.push(parsedData.albums.items[i]);
             }
@@ -54,6 +60,10 @@ function addArtists(marker) {
             if (request.readyState == 4 && request.status == 200) {
                 var rawData = request.responseText;
                 var parsedData = JSON.parse(rawData);
+
+                if (!parsedData.artists) {
+                    return;
+                }
 
                 marker.artists = [];
                 for (var i = 0; i < parsedData.artists.items.length; i++) {
