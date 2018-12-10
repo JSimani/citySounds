@@ -12,7 +12,9 @@ function initialize()
     infoWindow = addOverlay();
     getCurrentLocation();
     markers = createMarkers();
-    initSpotify();
+    if (hasAccess()) {
+        initSpotify();
+    }
 }
 
 function addOverlay() {
