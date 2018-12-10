@@ -5,6 +5,17 @@ function addLoginButton(map) {
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(loginControlDiv);
 }
 
+function addControlsButton(map) {
+    if (!hasAccess() || localStorage.account_type != "premium") {
+        return;
+    }
+
+    var playerControlDiv = document.createElement('div');
+    var centerControl = new PlayerControl(playerControlDiv, map);
+    playerControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(playerControlDiv);
+}
+
 function hasAccess() {
     return !(access_token == "null" || access_token == "undefined" || !access_token);
 }
@@ -96,4 +107,18 @@ function LoginControl(controlDiv, map) {
             window.location = "/";
         });
     }
+}
+
+function PlayerControl(controlDiv, map) {
+    var controlUI = document.createElement('div');
+    controlUI.setAttribute("id", "playerControlUI");
+
+    controlDiv.appendChild(controlUI);
+
+    var controlText = document.createElement('div');
+    controlText.setAttribute("id", "playerControlText");
+
+    controlText.innerHTML = "<img id='player-button' src='assets/images/play.png' onclick='player.resume()' alt='play'/><img id='player-button' src='assets/images/pause.png' onclick='player.pause()' alt='pause'/>";
+    
+    controlUI.appendChild(controlText);
 }

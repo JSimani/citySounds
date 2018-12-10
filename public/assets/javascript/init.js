@@ -9,6 +9,7 @@ function initialize()
     map = initMap();
     
     addLoginButton(map);
+    addControlsButton(map);
     infoWindow = addOverlay();
     getCurrentLocation();
     markers = createMarkers();
@@ -43,9 +44,8 @@ function addOverlay() {
 
 function openOverlay() {
     document.getElementById("overlay").style.width = "100%";
-    var closebtn = document.getElementById("closebtn");
     setTimeout(function(){ 
-        closebtn.style.position = "fixed";
+        document.getElementById("closebtn").style.position = "fixed";
     }, 500);
     
 }
@@ -81,7 +81,7 @@ function initializeInfoWindow(marker) {
                     
                 info += "<p><a class='link' href=' " + curAlbum.external_urls.spotify + "' target='_blank'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "&emsp;</a>";
                 if (localStorage.account_type == "premium") {
-                    info += "<a class='control'><img src='assets/images/play.png' onclick='playMedia(\"" + curAlbum.uri + "\");' alt='play'></a><a><img src='assets/images/pause.png' onclick='if (player) player.pause();' alt='pause'></a>";
+                    info += "<a class='control'><img src='assets/images/play.png' onclick='playMedia(\"" + curAlbum.uri + "\");' alt='play'></a>";
                 }
                 info += "</p>";
             }
