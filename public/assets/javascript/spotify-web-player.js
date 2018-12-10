@@ -22,7 +22,7 @@ function initSpotify() {
 
         // Ready
         player.addListener('ready', ({ device_id }) => {
-            console.log('Ready with Device ID', device_id);
+            // console.log('Ready with Device ID', device_id);
             device = device_id;
             // console.log("device: " + device);
             // playMedia("spotify:album:78yPA5hNyDnuTF42jJyblN");
@@ -40,7 +40,7 @@ function initSpotify() {
 
 function playMedia(spotify_uri) {
     var controlDiv = document.getElementById("playerControlText");
-    controlDiv.innerHTML = "<img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/>";
+    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
 
     if (!spotify_uri) {
         player.resume();
@@ -70,7 +70,19 @@ function playMedia(spotify_uri) {
 function pauseMedia() {
     player.pause();
     var controlDiv = document.getElementById("playerControlText");
-    controlDiv.innerHTML = "<img id='player-button' src='assets/images/play.png' onclick='playMedia(null);' alt='play'/>";
+    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/play.png' onclick='playMedia(null);' alt='play'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
+}
+
+function rewindMedia() {
+    player.previousTrack();
+    var controlDiv = document.getElementById("playerControlText");
+    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
+}
+
+function fastForwardMedia() {
+    player.nextTrack();
+    var controlDiv = document.getElementById("playerControlText");
+    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
 }
 
 function addControlsButton(map) {
