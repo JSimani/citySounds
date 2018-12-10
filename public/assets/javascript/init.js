@@ -80,7 +80,7 @@ function initializeInfoWindow(marker) {
             for (var i = 0; i < marker.albums.length; i++) {
                 var curAlbum = marker.albums[i];
                     
-                info += "<p><a class='link' href=' " + curAlbum.external_urls.spotify + "' target='_blank'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "&emsp;</a>";
+                info += "<p><a class='link' href=' " + curAlbum.external_urls.spotify + "' target='_blank'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a>&emsp;";
                 if (localStorage.account_type == "premium") {
                     info += "<a class='control'><img src='assets/images/play.png' onclick='playMedia(\"" + curAlbum.uri + "\");' alt='play'></a>";
                 }
@@ -98,7 +98,7 @@ function initializeInfoWindow(marker) {
             for (var i = 0; i < marker.artists.length; i++) {
                 var curArtist = marker.artists[i];
                 
-                info += "<p><a class='link' href=' " + curArtist.external_urls.spotify + "' target='_blank'>" + curArtist.name + "&emsp;</a>";
+                info += "<p><a class='link' href=' " + curArtist.external_urls.spotify + "' target='_blank'>" + curArtist.name + "</a>&emsp;";
                 if (localStorage.account_type == "premium") {
                     info += "<a class='control'><img src='assets/images/play.png' onclick='playMedia(\"" + curArtist.uri + "\");' alt='play'></a>";
                 }
