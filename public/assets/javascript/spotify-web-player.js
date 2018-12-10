@@ -22,7 +22,7 @@ function initSpotify() {
 
         // Ready
         player.addListener('ready', ({ device_id }) => {
-            // console.log('Ready with Device ID', device_id);
+            console.log('Ready with Device ID', device_id);
             device = device_id;
             // console.log("device: " + device);
             // playMedia("spotify:album:78yPA5hNyDnuTF42jJyblN");
@@ -39,6 +39,14 @@ function initSpotify() {
 }
 
 function playMedia(spotify_uri) {
+    var controlDiv = document.getElementById("playerControlText");
+    controlDiv.innerHTML = "<img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/>";
+
+    if (!spotify_uri) {
+        player.resume();
+        return;
+    }
+
     var currentState = player.getCurrentState();
     // console.log("currentState: ", currentState);
 
@@ -53,23 +61,42 @@ function playMedia(spotify_uri) {
 
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-            // var rawData = request.responseText;
-            // var parsedData = JSON.parse(rawData);
 
-            // marker.albums = [];
-            // for (var i = 0; i < parsedData.albums.items.length; i++) {
-            //     console.log(parsedData.albums.items[i]);
-            //     marker.albums.push(parsedData.albums.items[i]);
-            // }
-            
-            // initializeInfoWindow(marker);
-            // console.log("readyState success", "currentState: ", currentState);
         }
     }
     request.send(body);
 }
 
+function pauseMedia() {
+    player.pause();
+    var controlDiv = document.getElementById("playerControlText");
+    controlDiv.innerHTML = "<img id='player-button' src='assets/images/play.png' onclick='playMedia(null);' alt='play'/>";
+}
 
+function addControlsButton(map) {
+    if (!hasAccess() || localStorage.account_type != "premium") {
+        return;
+    }
+
+    var playerControlDiv = document.createElement('div');
+    var centerControl = new PlayerControl(playerControlDiv, map);
+    playerControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(playerControlDiv);
+}
+
+function PlayerControl(controlDiv, map) {
+    var controlUI = document.createElement('div');
+    controlUI.setAttribute("id", "playerControlUI");
+
+    controlDiv.appendChild(controlUI);
+
+    var controlText = document.createElement('div');
+    controlText.setAttribute("id", "playerControlText");
+
+    controlText.innerHTML = "<img id='player-button' src='assets/images/play.png' onclick='player.resume()' alt='play'/><img id='player-button' src='assets/images/pause.png' onclick='player.pause()' alt='pause'/>";
+    
+    controlUI.appendChild(controlText);
+}
 
 
 

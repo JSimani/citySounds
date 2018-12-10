@@ -3,6 +3,7 @@ var infoWindow = null;
 var curloc = null;
 var params = null;
 var device = null;
+var playing = false;
 
 function initialize()
 {
