@@ -24,8 +24,6 @@ function initSpotify() {
         player.addListener('ready', ({ device_id }) => {
             // console.log('Ready with Device ID', device_id);
             device = device_id;
-            // console.log("device: " + device);
-            // playMedia("spotify:album:78yPA5hNyDnuTF42jJyblN");
         });
 
         // Not Ready
@@ -46,9 +44,6 @@ function playMedia(spotify_uri) {
         player.resume();
         return;
     }
-
-    var currentState = player.getCurrentState();
-    // console.log("currentState: ", currentState);
 
     var query = "https://api.spotify.com/v1/me/player/play?device_id=" + device;
     var request = new XMLHttpRequest();

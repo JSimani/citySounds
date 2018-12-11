@@ -92,7 +92,6 @@ function LoginControl(controlDiv, map) {
     } else {
         controlUI.addEventListener('click', function() {
             localStorage.clear();
-
             window.location = "/";
         });
     }

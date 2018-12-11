@@ -93,9 +93,7 @@ function getCurrentLocation() {
         curloc = currentLocation;
     }
 
-    var error = function(err) {
-        console.warn('ERROR(${err.code}): ${err.message}');
-    }
+    var error = function(err) {};
 
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
