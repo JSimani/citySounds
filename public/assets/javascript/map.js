@@ -151,8 +151,9 @@ function SearchControl(controlDiv, map) {
         addSongs(marker);
         addAlbums(marker);
         addArtists(marker);
-  
+        
         map.panTo(place.geometry.location);
+        map.setZoom(4.75);
     });
 }
 
