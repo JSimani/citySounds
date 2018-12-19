@@ -38,46 +38,8 @@ function initSpotify() {
 
 function playMedia(spotify_uri) {
     var controlDiv = document.getElementById("playerControlText");
-    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
-
-    if (!spotify_uri) {
-        player.resume();
-        return;
-    }
-
-    var query = "https://api.spotify.com/v1/me/player/play?device_id=" + device;
-    var request = new XMLHttpRequest();
-    request.open("PUT", query, true);
-    request.setRequestHeader('Authorization', 'Bearer '+ access_token);
-    var data = {
-        context_uri: spotify_uri
-    };
-    var body = JSON.stringify(data);
-
-    request.onreadystatechange = function() {
-        if (request.readyState == 4 && request.status == 200) {
-
-        }
-    }
-    request.send(body);
-}
-
-function pauseMedia() {
-    player.pause();
-    var controlDiv = document.getElementById("playerControlText");
-    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/play.png' onclick='playMedia(null);' alt='play'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
-}
-
-function rewindMedia() {
-    player.previousTrack();
-    var controlDiv = document.getElementById("playerControlText");
-    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
-}
-
-function fastForwardMedia() {
-    player.nextTrack();
-    var controlDiv = document.getElementById("playerControlText");
-    controlDiv.innerHTML = "<img id='player-button' src='assets/images/rewind.png' onclick='rewindMedia();' alt='rewind'/><img id='player-button' src='assets/images/pause.png' onclick='pauseMedia();' alt='pause'/><img id='player-button' src='assets/images/fastforward.png' onclick='fastForwardMedia();' alt='fast forward'/>";
+    controlDiv.innerHTML = '<iframe src=\"' + getEmbeddedURL(spotify_uri) + '\" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+    closeOverlay();
 }
 
 function addControlsButton(map) {

@@ -67,7 +67,7 @@ function initializeInfoWindow(marker) {
 
             for (var i = 0; i < marker.songs.length; i++) {
                 var curTrack = marker.songs[i];
-                info += "<p><a class='link' href='" + curTrack.external_urls.spotify + "' target='_blank'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+                info += "<p><a class='link' onclick='playMedia(\"" + curTrack.uri + "\");'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
             }
         }
 
@@ -81,11 +81,7 @@ function initializeInfoWindow(marker) {
             for (var i = 0; i < marker.albums.length; i++) {
                 var curAlbum = marker.albums[i];
                     
-                info += "<p><a class='link' href=' " + curAlbum.external_urls.spotify + "' target='_blank'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a>&emsp;";
-                if (localStorage.account_type == "premium") {
-                    info += "<a class='control'><img src='assets/images/play.png' onclick='playMedia(\"" + curAlbum.uri + "\");' alt='play'></a>";
-                }
-                info += "</p>";
+                info += "<p><a class='link' onclick='playMedia(\"" + curAlbum.uri + "\");'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
             }
         }
 
@@ -99,11 +95,7 @@ function initializeInfoWindow(marker) {
             for (var i = 0; i < marker.artists.length; i++) {
                 var curArtist = marker.artists[i];
                 
-                info += "<p><a class='link' href=' " + curArtist.external_urls.spotify + "' target='_blank'>" + curArtist.name + "</a>&emsp;";
-                if (localStorage.account_type == "premium") {
-                    info += "<a class='control'><img src='assets/images/play.png' onclick='playMedia(\"" + curArtist.uri + "\");' alt='play'></a>";
-                }
-                info += "</p>";
+                info += "<p><a class='link' onclick='playMedia(\"" + curArtist.uri + "\");'>" + curArtist.name + "</a></p>";
             }
         }
 
@@ -132,7 +124,7 @@ function getEmbeddedURL(spotify_uri) {
         spotify_uri = spotify_uri.substring(7, spotify_uri.length);
         embedURL += "artist/" + spotify_uri;
     } else {
-        return;
+        embedURL = "parsing error";
     }
 
     return embedURL;
