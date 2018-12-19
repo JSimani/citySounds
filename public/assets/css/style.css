@@ -35,6 +35,16 @@ html, body {
     text-align: center;
 }
 
+#searchControlUI {
+    margin: 10px;
+}
+
+#searchInput {
+    width: 500px;
+    height: 34px;
+    font-size: 16px;
+}
+
 #spotify {
     width: 25px;
     height: 25px;

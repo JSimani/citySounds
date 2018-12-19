@@ -62,7 +62,7 @@ function initializeInfoWindow(marker) {
     if (!hasAccess()) {
         info += "<p><a href='/login'>Login to Spotify to View Songs</a></p>"; 
     } else {
-        if (marker.songs) {
+        if (marker.songs.length > 0) {
             info += "<p id='iw-subtitle'>Songs: </p>";
 
             for (var i = 0; i < marker.songs.length; i++) {
@@ -71,8 +71,8 @@ function initializeInfoWindow(marker) {
             }
         }
 
-        if (marker.albums) {
-            if (marker.songs) {
+        if (marker.albums.length > 0) {
+            if (marker.songs.length > 0) {
                 info += "<br>";
             }
 
@@ -89,8 +89,8 @@ function initializeInfoWindow(marker) {
             }
         }
 
-        if (marker.artists) {
-            if (marker.songs || marker.albums) {
+        if (marker.artists.length > 0) {
+            if (marker.songs.length > 0 || marker.albums.length > 0) {
                 info += "<br>";
             }
 
@@ -105,6 +105,10 @@ function initializeInfoWindow(marker) {
                 }
                 info += "</p>";
             }
+        }
+
+        if (!(marker.songs.length > 0 || marker.albums.length > 0 || marker.artists.length > 0)) {
+            info += "<p>No Results</p>";
         }
     }
 
