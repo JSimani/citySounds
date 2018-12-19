@@ -21,4 +21,4 @@ A website that displays a map with markers for each major city in the United Sta
 * User's geolocation
 
 ## Electronic Mockup
-![picture alt](https://github.com/tuftsdev/comp20-f2018-team4/blob/master/mockup.jpg "CitySounds Electronic Mockup")
+![picture alt](https://github.com/JSimani/citySounds/blob/master/mockup.jpg "CitySounds Electronic Mockup")
