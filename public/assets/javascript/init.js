@@ -118,7 +118,7 @@ function initializeInfoWindow(marker) {
     });
 }
 
-function embedURL(spotify_uri) {
+function getEmbeddedURL(spotify_uri) {
     var embedURL = "https://open.spotify.com/embed/";
     spotify_uri = spotify_uri.substring(8, spotify_uri.length);
 
@@ -127,12 +127,15 @@ function embedURL(spotify_uri) {
         embedURL += "album/" + spotify_uri;
     } else if (spotify_uri.substring(0, 5) == 'track') {
         spotify_uri = spotify_uri.substring(6, spotify_uri.length);
+        embedURL += "track/" + spotify_uri;
     } else if (spotify_uri.substring(0, 6) == 'artist') {
         spotify_uri = spotify_uri.substring(7, spotify_uri.length);
+        embedURL += "artist/" + spotify_uri;
     } else {
         return;
     }
 
-    return spotify_uri;
+    return embedURL;
 }
+
 

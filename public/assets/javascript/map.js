@@ -106,7 +106,6 @@ function getCurrentLocation() {
 }
 
 function addSearchButton(map) {
-    console.log(map);
     var searchControlDiv = document.createElement('div');
     var searchControl = new SearchControl(searchControlDiv, map);
     searchControlDiv.index = 1;
