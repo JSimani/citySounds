@@ -118,5 +118,21 @@ function initializeInfoWindow(marker) {
     });
 }
 
+function embedURL(spotify_uri) {
+    var embedURL = "https://open.spotify.com/embed/";
+    spotify_uri = spotify_uri.substring(8, spotify_uri.length);
 
+    if (spotify_uri.substring(0, 5) == 'album') {
+        spotify_uri = spotify_uri.substring(6, spotify_uri.length);
+        embedURL += "album/" + spotify_uri;
+    } else if (spotify_uri.substring(0, 5) == 'track') {
+        spotify_uri = spotify_uri.substring(6, spotify_uri.length);
+    } else if (spotify_uri.substring(0, 6) == 'artist') {
+        spotify_uri = spotify_uri.substring(7, spotify_uri.length);
+    } else {
+        return;
+    }
+
+    return spotify_uri;
+}
 

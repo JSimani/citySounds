@@ -35,7 +35,14 @@ function initMap() {
     myOptions = {
         zoom: 4.75, 
         center: {lat: 39.8283, lng: -98.5795},
-        mapTypeId: "roadmap"
+        mapTypeId: "roadmap",
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: true,
+        streetViewControl: false,
+        rotateControl: false,
+        fullscreenControl: false
+
     };   
                 
     return new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -99,6 +106,7 @@ function getCurrentLocation() {
 }
 
 function addSearchButton(map) {
+    console.log(map);
     var searchControlDiv = document.createElement('div');
     var searchControl = new SearchControl(searchControlDiv, map);
     searchControlDiv.index = 1;

@@ -88,7 +88,7 @@ function addControlsButton(map) {
     var playerControlDiv = document.createElement('div');
     var centerControl = new PlayerControl(playerControlDiv, map);
     playerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(playerControlDiv);
+    map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(playerControlDiv);
 }
 
 function PlayerControl(controlDiv, map) {
