@@ -139,8 +139,18 @@ function SearchControl(controlDiv, map) {
             map: map,
             anchorPoint: new google.maps.Point(0, -29),
             position: place.geometry.location,
-            animation: google.maps.Animation.DROP
+            animation: google.maps.Animation.DROP,
+            title: place.name,
+            songs: [],
+            albums: [],
+            artists: []
         });
+
+        initializeInfoWindow(marker);
+        markers.push(marker);
+        addSongs(marker);
+        addAlbums(marker);
+        addArtists(marker);
   
         map.panTo(place.geometry.location);
     });
