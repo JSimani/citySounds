@@ -97,3 +97,52 @@ function getCurrentLocation() {
 
     navigator.geolocation.getCurrentPosition(success, error, options);
 }
+
+function addSearchButton(map) {
+    var searchControlDiv = document.createElement('div');
+    var searchControl = new SearchControl(searchControlDiv, map);
+    searchControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(searchControlDiv);
+}
+
+function SearchControl(controlDiv, map) {
+    var controlUI = document.createElement('div');
+    controlUI.setAttribute("id", "searchControlUI");
+
+    controlUI.title = 'Search for a city';
+    
+    controlDiv.appendChild(controlUI);
+
+    var input = document.createElement('input');
+    input.setAttribute("id", "searchInput");
+    input.setAttribute("type", "text");
+    input.setAttribute("placeholder", "Enter a location");
+    
+    controlUI.appendChild(input);
+
+    var options = {
+      types: ['(cities)']
+    };
+
+
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    autocomplete.bindTo('bounds', map);
+
+    autocomplete.addListener('place_changed', function() {
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            window.alert("Please select the location from the dropdown menu");
+            return;
+        }
+
+        var marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -29),
+            position: place.geometry.location,
+            animation: google.maps.Animation.DROP
+        });
+  
+        map.panTo(place.geometry.location);
+    });
+}
+
