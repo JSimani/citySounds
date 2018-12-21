@@ -1,4 +1,4 @@
-function addSongs(marker) {
+function addSongs(marker, open) {
     if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=track:' + marker.title + '&type=track&limit=5';
         var request = new XMLHttpRequest();
@@ -17,7 +17,7 @@ function addSongs(marker) {
                     marker.songs.push(parsedData.tracks.items[i]);
                 }
 
-                initializeInfoWindow(marker);
+                initializeInfoWindow(marker, open);
             }
         }
         request.send();
@@ -25,7 +25,7 @@ function addSongs(marker) {
     }
 }
 
-function addAlbums(marker) {
+function addAlbums(marker, open) {
     if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=album:' + marker.title + '&type=album&limit=5';
         var request = new XMLHttpRequest();
@@ -43,14 +43,14 @@ function addAlbums(marker) {
                 marker.albums.push(parsedData.albums.items[i]);
             }
             
-            initializeInfoWindow(marker);
+            initializeInfoWindow(marker, open);
         }
         request.send();
 
     } 
 }
 
-function addArtists(marker) {
+function addArtists(marker, open) {
     if (hasAccess()) {
         var query = 'https://api.spotify.com/v1/search?q=artist:' + marker.title + '&type=artist&limit=5';
         var request = new XMLHttpRequest();
@@ -70,7 +70,7 @@ function addArtists(marker) {
                     marker.artists.push(parsedData.artists.items[i]);
                 }
                 
-                initializeInfoWindow(marker);
+                initializeInfoWindow(marker, open);
             }
         }
         request.send();

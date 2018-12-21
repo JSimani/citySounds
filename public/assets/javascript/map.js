@@ -62,13 +62,13 @@ function createMarkers() {
             artists: []
         });
 
-        initializeInfoWindow(marker);
+        initializeInfoWindow(marker, false);
 
         markers.push(marker);
 
-        addSongs(marker);
-        addAlbums(marker);
-        addArtists(marker);
+        addSongs(marker, false);
+        addAlbums(marker, false);
+        addArtists(marker, false);
     }
 
     return markers;
@@ -153,14 +153,15 @@ function SearchControl(controlDiv, map) {
             artists: []
         });
 
-        initializeInfoWindow(marker);
+        initializeInfoWindow(marker, false);
         markers.push(marker);
-        addSongs(marker);
-        addAlbums(marker);
-        addArtists(marker);
+        addSongs(marker, false);
+        addAlbums(marker, false);
+        addArtists(marker, true);
         
         map.panTo(place.geometry.location);
         map.setZoom(4.75);
+
     });
 }
 

@@ -57,7 +57,7 @@ function closeOverlay() {
     document.getElementById("overlay").style.width = "0%";
 }
 
-function initializeInfoWindow(marker) {
+function initializeInfoWindow(marker, open) {
     var info = "<p id='iw-title'>" + marker.title + "</p>";
     if (!hasAccess()) {
         info += "<p><a href='/login'>Login to Spotify to View Songs</a></p>"; 
@@ -108,6 +108,11 @@ function initializeInfoWindow(marker) {
         infoWindow.innerHTML = info;
         openOverlay();
     });
+
+    if (open) {
+        infoWindow.innerHTML = info;
+        openOverlay();
+    }
 }
 
 function getEmbeddedURL(spotify_uri) {
