@@ -1,4 +1,4 @@
-function initSpotify() {
+function initPlayer() {
     var script = document.createElement("script"); 
     script.src = "https://sdk.scdn.co/spotify-player.js"; 
 
