@@ -111,7 +111,6 @@ function initializeInfoWindow(marker, open) {
 
     if (open) {
         infoWindow.innerHTML = info;
-        openOverlay();
     }
 }
 

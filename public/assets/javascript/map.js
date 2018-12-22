@@ -162,6 +162,7 @@ function SearchControl(controlDiv, map) {
         map.panTo(place.geometry.location);
         map.setZoom(4.75);
 
+        setTimeout(openOverlay, 1000);
     });
 }
 
