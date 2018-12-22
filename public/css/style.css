@@ -88,18 +88,13 @@ html, body {
     text-align: left; 
     padding: 8px;
     color: rgb(101, 210, 110);
+    cursor: default;
 }
 
 #overlay-content a {
     text-decoration: none;
     transition: 0.3s; 
     color: rgb(101, 210, 110);
-}
-
-#overlay-content a img {
-    height: 18px;
-    width: 18px;
-    vertical-align: text-bottom;
     cursor: pointer;
 }
 

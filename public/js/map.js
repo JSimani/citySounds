@@ -41,8 +41,16 @@ function initMap() {
         scaleControl: true,
         streetViewControl: false,
         rotateControl: false,
-        fullscreenControl: false
-
+        fullscreenControl: false,
+        styles: [
+            {
+                featureType: "road",
+                elementType: "labels",
+                stylers: [
+                    { visibility: "off" }
+                ]
+            }
+        ]
     };   
                 
     return new google.maps.Map(document.getElementById("map_canvas"), myOptions);
