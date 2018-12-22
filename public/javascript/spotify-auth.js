@@ -77,10 +77,10 @@ function LoginControl(controlDiv, map) {
     controlText.setAttribute("id", "loginControlText");
 
     if (!hasAccess()) {
-        controlText.innerHTML = "Login to Spotify <img id='spotify' src='assets/images/spotify.png'/>";
+        controlText.innerHTML = "Login to Spotify <img id='spotify' src='images/spotify.png'/>";
 
     } else {
-        controlText.innerHTML = "Logout <img id='spotify' src='assets/images/spotify.png'/>";
+        controlText.innerHTML = "Logout <img id='spotify' src='images/spotify.png'/>";
     }
     
     controlUI.appendChild(controlText);
