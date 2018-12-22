@@ -86,15 +86,15 @@ function getCurrentLocation() {
         };
 
         var currentLocation = new google.maps.Marker({
-                position: coordinates,
-                map: map,
-                icon: {
-                    url: "assets/images/curloc.png",
-                    scaledSize: new google.maps.Size(30, 30), 
-                    origin: new google.maps.Point(0,0), 
-                    anchor: new google.maps.Point(15, 15) 
-                },
-                title: "Current Location"
+            position: coordinates,
+            map: map,
+            icon: {
+                url: "images/curloc.png",
+                scaledSize: new google.maps.Size(30, 30), 
+                origin: new google.maps.Point(0,0), 
+                anchor: new google.maps.Point(15, 15) 
+            },
+            title: "Current Location"
         });
 
         curloc = currentLocation;
