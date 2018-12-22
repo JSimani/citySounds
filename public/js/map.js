@@ -59,7 +59,8 @@ function createMarkers() {
             title: city[0],
             songs: [],
             albums: [],
-            artists: []
+            artists: [],
+            zIndex: 0
         });
 
         initializeInfoWindow(marker, false);
@@ -94,7 +95,8 @@ function getCurrentLocation() {
                 origin: new google.maps.Point(0,0), 
                 anchor: new google.maps.Point(15, 15) 
             },
-            title: "Current Location"
+            title: "Current Location",
+            zIndex: -1
         });
 
         curloc = currentLocation;
