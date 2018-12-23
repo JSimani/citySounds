@@ -74,10 +74,7 @@ function createMarkers() {
         initializeInfoWindow(marker, false);
 
         markers.push(marker);
-
-        addSongs(marker, false);
-        addAlbums(marker, false);
-        addArtists(marker, false);
+        addMedia();
     }
 
     return markers;

@@ -4,17 +4,18 @@ var curloc = null;
 var params = null;
 var device = null;
 var playing = false;
+var playable = supportedPlayback();
 
 function initialize()
 {
     map = initMap();
     
     addLoginButton(map);
+    markers = createMarkers();
     addControlsButton(map);
     addSearchButton(map);
     infoWindow = addOverlay();
     getCurrentLocation();
-    markers = createMarkers();
 }
 
 function addOverlay() {
@@ -54,8 +55,19 @@ function closeOverlay() {
     document.getElementById("overlay").style.width = "0%";
 }
 
+function addMedia() {
+    for (var i = 0; i < markers.length; i++) {
+        var marker = markers[i];
+
+        addSongs(marker, false);
+        addAlbums(marker, false);
+        addArtists(marker, false);
+    }
+}
+
 function initializeInfoWindow(marker, open) {
     var info = "<p id='iw-title'>" + marker.title + "</p>";
+    
     if (!hasAccess()) {
         info += "<p><a href='/login'>Login to Spotify to View Songs</a></p>"; 
     } else {
@@ -64,7 +76,12 @@ function initializeInfoWindow(marker, open) {
 
             for (var i = 0; i < marker.songs.length; i++) {
                 var curTrack = marker.songs[i];
-                info += "<p><a class='link' onclick='playMedia(\"" + curTrack.uri + "\");'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+
+                if (playable) {
+                    info += "<p><a class='link' onclick='playMedia(\"" + curTrack.uri + "\");'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+                } else {
+                    info += "<p><a class='link' href=' " + curTrack.external_urls.spotify + "' target='_blank'>" + curTrack.name + " by " + curTrack.artists[0].name + "</a></p>";
+                }
             }
         }
 
@@ -77,8 +94,12 @@ function initializeInfoWindow(marker, open) {
 
             for (var i = 0; i < marker.albums.length; i++) {
                 var curAlbum = marker.albums[i];
-                    
-                info += "<p><a class='link' onclick='playMedia(\"" + curAlbum.uri + "\");'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+
+                if (playable) {
+                    info += "<p><a class='link' onclick='playMedia(\"" + curAlbum.uri + "\");'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+                } else {
+                    info += "<p><a class='link' href=' " + curAlbum.external_urls.spotify + "' target='_blank'>" + curAlbum.name + " by " + curAlbum.artists[0].name + "</a></p>";
+                }
             }
         }
 
@@ -91,8 +112,12 @@ function initializeInfoWindow(marker, open) {
 
             for (var i = 0; i < marker.artists.length; i++) {
                 var curArtist = marker.artists[i];
-                
-                info += "<p><a class='link' onclick='playMedia(\"" + curArtist.uri + "\");'>" + curArtist.name + "</a></p>";
+
+                if (playable) {
+                    info += "<p><a class='link' onclick='playMedia(\"" + curArtist.uri + "\");'>" + curArtist.name + "</a></p>";
+                } else {
+                    info += "<p><a class='link' href=' " + curArtist.external_urls.spotify + "' target='_blank'>" + curArtist.name + "</a></p>";
+                }
             }
         }
 
@@ -130,5 +155,4 @@ function getEmbeddedURL(spotify_uri) {
 
     return embedURL;
 }
-
 

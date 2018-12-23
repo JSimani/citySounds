@@ -17,12 +17,8 @@ function initPlayer() {
         player.addListener('account_error', ({ message }) => { console.error(message); });
         player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-        // Playback status updates
-        // player.addListener('player_state_changed', state => { console.log(state); });
-
         // Ready
         player.addListener('ready', ({ device_id }) => {
-            // console.log('Ready with Device ID', device_id);
             device = device_id;
         });
 
@@ -43,7 +39,7 @@ function playMedia(spotify_uri) {
 }
 
 function addControlsButton(map) {
-    if (!hasAccess() || localStorage.account_type != "premium") {
+    if (!hasAccess()) {
         return;
     }
 
@@ -64,7 +60,35 @@ function PlayerControl(controlDiv, map) {
     controlUI.appendChild(controlText);
 }
 
-
+function supportedPlayback() {
+    var config = [
+        {
+            "initDataTypes": ["cenc"],
+            "audioCapabilities": [
+                {
+                    "contentType": "audio/mp4;codecs=\"mp4a.40.2\""
+                }
+            ],
+            "videoCapabilities": [
+                {
+                    "contentType": "video/mp4;codecs=\"avc1.42E01E\""
+                }
+            ]
+        }
+    ];
+    try {
+        navigator.
+        requestMediaKeySystemAccess("com.widevine.alpha", config).
+        then(function(mediaKeySystemAccess) {
+            return true;
+        }).catch(function(e) {
+            return false;
+        });
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
 
 
 
