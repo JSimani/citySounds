@@ -57,7 +57,7 @@ function initMap() {
 }
 
 function createMarkers() {
-    var markers = [];
+    markers = [];
     for (var i = 0; i < cities.length; i++) {
         var city = cities[i];
 
@@ -74,10 +74,10 @@ function createMarkers() {
         initializeInfoWindow(marker, false);
 
         markers.push(marker);
-        addMedia();
+
     }
 
-    return markers;
+    addMedia();
 }
 
 function getCurrentLocation() {

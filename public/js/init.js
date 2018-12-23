@@ -11,7 +11,7 @@ function initialize()
     map = initMap();
     
     addLoginButton(map);
-    markers = createMarkers();
+    createMarkers();
     addControlsButton(map);
     addSearchButton(map);
     infoWindow = addOverlay();
