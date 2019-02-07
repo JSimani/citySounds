@@ -1,6 +1,6 @@
 function addSongs(marker, open) {
     if (hasAccess()) {
-        var query = 'https://api.spotify.com/v1/search?q=track:' + marker.title + '&type=track&limit=5';
+        var query = 'https://api.spotify.com/v1/search?q=track:' + marker.search + '&type=track&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
         request.setRequestHeader('Authorization', 'Bearer '+ access_token);
@@ -27,7 +27,7 @@ function addSongs(marker, open) {
 
 function addAlbums(marker, open) {
     if (hasAccess()) {
-        var query = 'https://api.spotify.com/v1/search?q=album:' + marker.title + '&type=album&limit=5';
+        var query = 'https://api.spotify.com/v1/search?q=album:' + marker.search + '&type=album&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
         request.setRequestHeader('Authorization', 'Bearer '+ access_token);
@@ -52,7 +52,7 @@ function addAlbums(marker, open) {
 
 function addArtists(marker, open) {
     if (hasAccess()) {
-        var query = 'https://api.spotify.com/v1/search?q=artist:' + marker.title + '&type=artist&limit=5';
+        var query = 'https://api.spotify.com/v1/search?q=artist:' + marker.search + '&type=artist&limit=5';
         var request = new XMLHttpRequest();
         request.open("GET", query, true);
         request.setRequestHeader('Authorization', 'Bearer '+ access_token);
@@ -71,6 +71,25 @@ function addArtists(marker, open) {
                 }
                 
                 initializeInfoWindow(marker, open);
+            }
+        }
+        request.send();
+
+    } 
+}
+
+function currentSong() {
+    if (hasAccess()) {
+        var query = 'https://api.spotify.com/v1/me/player/currently-playing';
+        var request = new XMLHttpRequest();
+        request.open("GET", query, true);
+        request.setRequestHeader('Authorization', 'Bearer '+ access_token);
+        request.onreadystatechange = function() {
+            if (request.readyState == 4) {
+                var rawData = request.responseText;
+                var parsedData = JSON.parse(rawData);
+
+                console.log(parsedData);
             }
         }
         request.send();

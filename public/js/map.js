@@ -23,7 +23,7 @@ var cities = [
     ['Paris', 48.8566, 2.3522],
     ['Madrid', 40.4168, -3.7038],
     ['Tokyo', 35.6895, 139.6917],
-    ['Santa', 86, 0],
+    ['North Pole', 86, 0],
     ['Rio', -22.9068, -43.1729],
     ['Istanbul', 41.0082, 28.9784],
     ['Rome', 41.9028, 12.4964],
@@ -68,6 +68,7 @@ function createMarkers() {
             songs: [],
             albums: [],
             artists: [],
+            search: (city[0] == "North Pole" ? "Santa" : city[0]),
             zIndex: 0
         });
 

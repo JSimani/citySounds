@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 
 var client_id = process.env.CLIENT_ID; // Your client id
 var client_secret = process.env.CLIENT_SECRET; // Your secret
-// var redirect_uri = 'http://localhost:8000/callback';
-var redirect_uri = 'https://citysounds20.herokuapp.com/callback';
+var redirect_uri = 'http://localhost:8000/callback';
+// var redirect_uri = 'https://citysounds20.herokuapp.com/callback';
 
 if (!client_id) {
     var keys = require('./config');
@@ -39,7 +39,7 @@ app.get('/login', function(req, res) {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
 
-    var scope = "streaming user-read-birthdate user-read-email user-read-private user-modify-playback-state";
+    var scope = "streaming user-read-birthdate user-read-email user-read-private user-modify-playback-state user-read-playback-state";
     res.redirect('https://accounts.spotify.com/authorize?' +
                 querystring.stringify({
                     response_type: 'code',
